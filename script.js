@@ -1,3 +1,5 @@
+let counter=0;
+
 const video = document.getElementById("video");
 
 const stressLevels = {
@@ -12,6 +14,7 @@ const stressLevels = {
 
 // Replace drawDetections function with stress level labels
 function drawStressLabels(canvas, detections) {
+  
   console.log("called");
   detections.forEach((detection) => {
     const { expressions } = detection || {}; // Destructure with default empty object
@@ -23,7 +26,13 @@ function drawStressLabels(canvas, detections) {
 
     const stressID = document.querySelector("#stress-level");
     if (stressID) {
-      stressID.textContent = dominantExpression + "(" + stressLevel + ")";
+      if(stressLevel=="Low Stress") {counter+=3;
+      else if(stressLevel=="Moderate Stress") counter=counter-1;
+      else if(stressLevel=="Moderate to High Stress") counter=counter-2;
+      else  counter=counter-3;
+
+      stressID.textContent = `${dominantExpression} (${stressLevel})
+        Stress count = ${counter}`;
     }
   });
 }
