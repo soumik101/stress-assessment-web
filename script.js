@@ -9,7 +9,8 @@ const stressLevels = {
   disgusted: "Moderate Stress",
   surprised: "Moderate Stress",
 };
-let cnt = 0;
+let cnt = 1;
+let sum = 0;
 // Replace drawDetections function with stress level labels
 function drawStressLabels(canvas, detections) {
   console.log("called");
@@ -28,9 +29,9 @@ function drawStressLabels(canvas, detections) {
       } else if (stressLevel == "Moderate Stress") sum = sum - 1;
       else if (stressLevel == "Moderate to High Stress") sum = sum - 2;
       else sum = sum - 3;
-
+      let rounded = customRound(sum / cnt, 4);
       stressID.textContent = `${dominantExpression} (${stressLevel})
-        Stress count = ${sum / cnt}`;
+        Stress count = ${rounded}`;
     }
   });
 }
@@ -86,3 +87,8 @@ video.addEventListener("play", () => {
     drawStressLabels(canvas, resizedDetections);
   }, 100);
 });
+
+function customRound(number, decimalPlaces) {
+  let factor = Math.pow(10, decimalPlaces);
+  return Math.round(number * factor) / factor;
+}
