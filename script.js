@@ -1,5 +1,3 @@
-let counter=0;
-
 const video = document.getElementById("video");
 
 const stressLevels = {
@@ -11,14 +9,13 @@ const stressLevels = {
   disgusted: "Moderate Stress",
   surprised: "Moderate Stress",
 };
-
+let cnt = 0;
 // Replace drawDetections function with stress level labels
 function drawStressLabels(canvas, detections) {
-  
   console.log("called");
   detections.forEach((detection) => {
     const { expressions } = detection || {}; // Destructure with default empty object
-
+    cnt++;
     const dominantExpression = getDominantExpression(expressions);
 
     const stressLevel =
@@ -26,13 +23,14 @@ function drawStressLabels(canvas, detections) {
 
     const stressID = document.querySelector("#stress-level");
     if (stressID) {
-      if(stressLevel=="Low Stress") {counter+=3;
-      else if(stressLevel=="Moderate Stress") counter=counter-1;
-      else if(stressLevel=="Moderate to High Stress") counter=counter-2;
-      else  counter=counter-3;
+      if (stressLevel == "Low Stress") {
+        sum += 3;
+      } else if (stressLevel == "Moderate Stress") sum = sum - 1;
+      else if (stressLevel == "Moderate to High Stress") sum = sum - 2;
+      else sum = sum - 3;
 
       stressID.textContent = `${dominantExpression} (${stressLevel})
-        Stress count = ${counter}`;
+        Stress count = ${sum / cnt}`;
     }
   });
 }
